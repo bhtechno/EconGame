@@ -22,7 +22,6 @@ public class GeneralManager : MonoBehaviour
 
     void Start()
     {
-
         currentPlayer = GameObject.FindObjectOfType<Player>();
         // print("Name = " + currentPlayer.name);
         boardTiles = board.transform.GetComponentsInChildren<AbstractTile>();
@@ -32,8 +31,7 @@ public class GeneralManager : MonoBehaviour
         {
             // print(boardTiles[i].name);
         }
-
-        currentPlayer.transform.position = boardTiles[5].PlayersLocations[0];
+        currentPlayer.transform.position = boardTiles[0].PlayersLocations[0];
     }
 
     // Update is called once per frame
@@ -41,5 +39,7 @@ public class GeneralManager : MonoBehaviour
     {
 
     }
+
+    // TODO: Create a turn system
 
 }

@@ -1,0 +1,9 @@
+1. All instantiations of classes are done at Awake
+2. All references to other components or objects are at start
+
+
+3. Currently, playerindex is set manually.
+later, he menu will set it
+
+
+6/26: finished playerMovement. Next goal: Set Up a turn system

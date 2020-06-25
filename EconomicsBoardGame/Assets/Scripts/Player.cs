@@ -4,22 +4,27 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    byte playerIndex;
+    public short playerIndex; // SET BY MAIN MENU. for now, set here
     string playerColor;
     string initialBussiness;
     float moneyAmount = 5000f;
     float valueAmount = 500f;
-    AbstractTile[] OwnedLands;
+    AbstractTile[] OwnedLands; // change later to list, since it's changeable
+
     // Start is called before the first frame update
-    void Start()
-    {
+    private AbstractTile currentTile;
+
+
+    private void Awake() {
+        playerIndex = 0; // change later through main menu
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+    public AbstractTile GetCurrentTile() {
+        return currentTile;
+    }
+    public void setCurrentTile(AbstractTile currentTile) {
+        this.currentTile = currentTile;
     }
 
 
