@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Project_Enums;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private short currentTileIndex = 0 ;
     [SerializeField] private short targetTileIndex = 5;
     private Vector3 velocity = Vector3.zero; // used by smoothDampen exclusively
-
 
     // Start is called before the first frame update
 
@@ -55,7 +55,8 @@ public class PlayerMovement : MonoBehaviour
      * Called when the destination tile is reached.
     */
     private void arrivalProcedure() {
-         playerComponent.setCurrentTile(boardTiles[currentTileIndex]);
+        playerComponent.setCurrentTile(boardTiles[currentTileIndex]);
+        CustomEventSystem.fireEvent(EVENT_TYPE.PLAYER_ARRIVED);
          // send alert event
     }
     /*
