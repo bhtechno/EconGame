@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Project_Enums
+﻿public class Project_Enums
 {
     public enum EVENT_TYPE { PLAYER_ARRIVED, DICE_FINISHED};
-    public enum GameStatus { WAITING_THROW, AFTER_THROW} ;
-    public enum TileStatus {UNOWNED_LAND, OWNED_LAND};
+    public enum GAME_STATUS { WAITING_THROW, AFTER_THROW} ;
+    public enum TILE_STATUS {UNOWNED_LAND, OWNED_LAND};
+    public enum BUTTON_TYPE {THROW_DICE, END_TURN}
+
 }

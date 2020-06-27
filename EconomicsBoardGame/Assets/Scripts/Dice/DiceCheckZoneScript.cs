@@ -44,22 +44,22 @@ public class DiceCheckZoneScript : MonoBehaviour {
 		{
 			switch (col.gameObject.name) {
 			case "Side1":
-				diceManager.setDice(6);
+				DiceManager.setDice(6);
 				break;
 			case "Side2":
-				diceManager.setDice(5);
+				DiceManager.setDice(5);
 				break;
 			case "Side3":
-				diceManager.setDice(4);
+				DiceManager.setDice(4);
 				break;
 			case "Side4":
-				diceManager.setDice(3);
+				DiceManager.setDice(3);
 				break;
 			case "Side5":
-				diceManager.setDice(2);
+				DiceManager.setDice(2);
 				break;
 			case "Side6":
-				diceManager.setDice(1);
+				DiceManager.setDice(1);
 				break;
 			}
 			col.enabled = false;

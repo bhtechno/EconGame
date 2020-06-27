@@ -5,5 +5,8 @@
 3. Currently, playerindex is set manually.
 later, he menu will set it
 
+4. Important: remove the modula operator in PlayerMvement in the update function, and in the
+up o one tile. They exist just for the debugging to work
+
 
 6/26: finished playerMovement. Next goal: Set Up a turn system

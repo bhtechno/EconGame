@@ -17,30 +17,24 @@ public abstract class AbstractTile : MonoBehaviour
     protected float rentMoney = 500f;
     [SerializeField]
 
+    const short playersNo = 4;
     Vector3 location;
     void Awake() {
 
         // assign tthe offsets to each player
         PlayerslocationsOffsets = new Vector3[4];
-        PlayerslocationsOffsets[0] = new Vector3(-0.5f, 0.7f, 0.5f);
-        PlayerslocationsOffsets[1] = new Vector3(0.4f, 0.7f, 0.5f);
-        PlayerslocationsOffsets[2] = new Vector3(0.4f, 0.7f, -0.25f);
-        PlayerslocationsOffsets[3] = new Vector3(-0.5f, 0.7f, -0.25f);
+        PlayerslocationsOffsets[0] = new Vector3(-0.75f, 0.45f, 0.75f);
+        PlayerslocationsOffsets[1] = new Vector3(0.75f, 0.45f, -0.75f);
+        PlayerslocationsOffsets[2] = new Vector3(0.75f, 0.45f, 0.75f);
+        PlayerslocationsOffsets[3] = new Vector3(-0.75f, 0.45f, -0.75f);
 
         // add the global position of the tile to the offsets
         PlayersLocations = new Vector3[4];
-        PlayersLocations[0] = transform.position + Vector3.up * PlayerslocationsOffsets[0].y
-            + Vector3.left * PlayerslocationsOffsets[0].x + Vector3.forward * PlayerslocationsOffsets[0].z;
-
-        PlayersLocations[1] = transform.position + Vector3.up * PlayerslocationsOffsets[1].y
-            + Vector3.left * PlayerslocationsOffsets[1].x + Vector3.forward * PlayerslocationsOffsets[1].z;
-
-        PlayersLocations[2] = transform.position + Vector3.up * PlayerslocationsOffsets[2].y
-            + Vector3.left * PlayerslocationsOffsets[2].x + Vector3.forward * PlayerslocationsOffsets[2].z;
-
-        PlayersLocations[3] = transform.position + Vector3.up * PlayerslocationsOffsets[3].y
-            + Vector3.left * PlayerslocationsOffsets[3].x + Vector3.forward * PlayerslocationsOffsets[3].z;
-
+        for (int i = 0; i < playersNo; i++)
+        {
+            PlayersLocations[i] = transform.position + Vector3.up * PlayerslocationsOffsets[i].y
+            + Vector3.right * PlayerslocationsOffsets[i].x + Vector3.forward * PlayerslocationsOffsets[i].z;
+        }
         // location = transform.position + Vector3.up * 0.5f + Vector3.right * 0.25f;
     }
 

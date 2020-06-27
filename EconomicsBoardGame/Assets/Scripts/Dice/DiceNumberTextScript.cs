@@ -16,8 +16,8 @@ public class DiceNumberTextScript : MonoBehaviour {
 		text = this.GetComponent<TextMeshProUGUI>();
 	}
 
-	// Update is called once per frame
-	void Update () {
-		text.text = diceNumber.ToString();
-	}
+	// // Update is called once per frame
+	// void Update () {
+	// 	text.text = diceNumber.ToString();
+	// }
 }
