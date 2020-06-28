@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Project_Enums;
@@ -10,23 +11,11 @@ public class GeneralManager : MonoBehaviour
     public AbstractTile[] boardTiles;
     private Player currentPlayer; // current player. Both this and the movement need to be updated each turn.
     private short currentPlayerIndex = 0;
-    PlayerMovement currentPlayerMovement; // current player's movement component
-    // static Dictionary <EVENT_TYPE, List<EventListener>> eventListeners;
-    // Enum.GetNames(typeof(MyEnum)).Length;
-
-    // butto
-
 
     // what tile each player currently resides.
     // player1: [0], player2: [1], etc.
-    AbstractTile[] playersLocations;
-
-    // public float
-    // Start is called before the first frame update
-    AbstractTile tile; // temprory
-    
-    [SerializeField]
-    Player[] players;
+    // AbstractTile[] playersLocations;
+    [SerializeField] Player[] players;
     private void Awake() {
         // get the board tiles
         boardTiles = board.transform.GetComponentsInChildren<AbstractTile>();
@@ -34,16 +23,21 @@ public class GeneralManager : MonoBehaviour
 
     void Start()
     {
-        // find players and select first one
+        IComparer compareFunction = new PlayerCompare();
         players = GameObject.FindObjectsOfType<Player>();
+        Array.Sort(players, compareFunction);
+        // find players and select first one
+        for (short i = 0; i < GameInfo.playersNo; i++)
+        {
+            players[i].playerIndex = i;
+            players[i].playerColor = GameInfo.playersColors[i];
+        }
+
         currentPlayer = players[0];
-        // currentPlayer.playerIndex = 0;
-        currentPlayerMovement = currentPlayer.GetComponent<PlayerMovement>();
 
         // Register the function player arrived in the eventSystem, for playerArrived.
         CustomEventSystem.RegisterListener(EVENT_TYPE.PLAYER_ARRIVED, OnPlayerArrived);
         currentPlayer.transform.position = boardTiles[0].PlayersLocations[0];
-
 
         startTurn();
     }
@@ -63,7 +57,7 @@ public class GeneralManager : MonoBehaviour
     */
     private void OnPlayerArrived(EventInfo eventInfo) {
         print("player finished moving!");
-        currentPlayerMovement.enabled = false;
+        currentPlayer.playerMovement.enabled = false;
     }
 
     /*
@@ -106,4 +100,17 @@ public class GeneralManager : MonoBehaviour
 
     // TODO: Create a turn system
 
+}
+
+
+/*
+ * Used to order the players based on their order under the parent
+*/
+public class PlayerCompare : IComparer
+{
+   public int Compare(object p1, object p2) {
+        // GameObject frstP = (GameObject)p1;
+        // GameObject scndP = (GameObject)p2;
+        return ((Player)(p1)).transform.GetSiblingIndex().CompareTo(((Player)p2).transform.GetSiblingIndex());
+    }
 }

@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Project_Enums;
 
 public class Player : MonoBehaviour
 {
     public short playerIndex; // SET BY MAIN MENU. for now, set here
-    string playerColor;
+    public PLAYER_COLORS playerColor;
     string initialBussiness;
+    public PlayerMovement playerMovement;
     float moneyAmount = 5000f;
     float valueAmount = 500f;
     AbstractTile[] OwnedLands; // change later to list, since it's changeable
@@ -14,10 +16,14 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     private AbstractTile currentTile;
 
-
     private void Awake() {
         // playerIndex = 0; // change later through main menu
 
+
+    }
+
+    private void Start() {
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     public AbstractTile GetCurrentTile() {
