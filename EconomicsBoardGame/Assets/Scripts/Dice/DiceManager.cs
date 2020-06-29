@@ -24,9 +24,17 @@ public class DiceManager : MonoBehaviour
     * used by the dice value zone reader to set the value of one dice
     */
     public static void setDice(byte value) {
+        if (diceSetCount > diceValues.Length) {
+            total = diceValues[0] + diceValues[1];
+            return;
+        }
         diceValues[diceSetCount] = value;
         diceSetCount++;
         total = diceValues[0] + diceValues[1];
+    }
+
+    public static void ResetDiceReadyStatus() {
+        diceSetCount = 0;
     }
 
 
@@ -54,7 +62,7 @@ public class DiceManager : MonoBehaviour
             diceInstances[i].ResetThisDice();
             diceInstances[i].GetComponent<Rigidbody>().useGravity = false;
             diceInstances[i].GetComponent<BoxCollider>().enabled = false;
-            diceInstances[i].transform.position = new Vector3(10, 0, i);
+            diceInstances[i].transform.position = new Vector3(20, 10, i);
         }
         diceSetCount = 0;
         total = 0;
@@ -75,18 +83,17 @@ public class DiceManager : MonoBehaviour
 
     // TODO: enables and disable the throws speed frame checks here.
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
+    // used because buttons OnClick does not allow a static function to be clicked
+    #region staticFunctionsWrappers
+    public void ThrowAllDiceNotStatic() {
+        ThrowAllDice();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+    public void resetDiceNotStatic() {
+        resetDices();
     }
 
+#endregion
 
 
 }

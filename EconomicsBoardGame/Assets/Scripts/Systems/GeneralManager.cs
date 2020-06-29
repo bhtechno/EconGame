@@ -31,23 +31,26 @@ public class GeneralManager : MonoBehaviour
         {
             players[i].playerIndex = i;
             players[i].playerColor = GameInfo.playersColors[i];
+            players[i].transform.position = boardTiles[0].PlayersLocations[i];
         }
 
         currentPlayer = players[0];
 
         // Register the function player arrived in the eventSystem, for playerArrived.
         CustomEventSystem.RegisterListener(EVENT_TYPE.PLAYER_ARRIVED, OnPlayerArrived);
-        currentPlayer.transform.position = boardTiles[0].PlayersLocations[0];
-
+        DiceManager.resetDices();
         startTurn();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if (DiceManager.DiceTotalReady())
-        //     print(DiceManager.GetDiceTotal());
-
+        if (DiceManager.DiceTotalReady()) {
+            short totalMoves = DiceManager.GetDiceTotal();
+            DiceManager.ResetDiceReadyStatus();
+            currentPlayer.playerMovement.setMovementValues(totalMoves);
+            currentPlayer.playerMovement.enabled = true;
+        }
     }
 
     /*
@@ -57,6 +60,7 @@ public class GeneralManager : MonoBehaviour
     */
     private void OnPlayerArrived(EventInfo eventInfo) {
         print("player finished moving!");
+        GUImanager.EnableButton(BUTTON_TYPE.END_TURN);
         currentPlayer.playerMovement.enabled = false;
     }
 
@@ -67,24 +71,21 @@ public class GeneralManager : MonoBehaviour
         // allow the current player to throw a dice, or do any possible action at this time
         // ex. trade, mortgage, charity, etc.
         // STATUS: WAITING FOR DICE THROW
-
-
+        GUImanager.DisableButton(BUTTON_TYPE.END_TURN);
+        GUImanager.EnableButton(BUTTON_TYPE.THROW_DICE);
         // after Dice throw:
         // STATUS: AFTER DICE THROW
         // here, disable dice throw, unless double
         // events should be fired. Buy land, pull card, etc.
         // also, all options before the hrow should be open.
         // enable the button to end the turn
-        short diceValue = 0;
-        if (DiceManager.DiceTotalReady()) {
-            diceValue = DiceManager.GetDiceTotal();
-            // currentPlayer.setCurrentTile()
-            // currentPlayerMovement.setMovementValues()
-        }
+
+
+        //     // currentPlayer.setCurrentTile()
+        //     // currentPlayerMovement.setMovementValues()
 
 
     }
-
 
     /*
     * called by a button for player
@@ -96,6 +97,9 @@ public class GeneralManager : MonoBehaviour
         currentPlayerIndex %= (short)players.Length;
         currentPlayer = players[currentPlayerIndex];
         DiceManager.resetDices();
+        GUImanager.EnableButton(BUTTON_TYPE.THROW_DICE);
+        startTurn();
+        // Also, throw button should be enabled, and made interacable
     }
 
     // TODO: Create a turn system
@@ -104,7 +108,7 @@ public class GeneralManager : MonoBehaviour
 
 
 /*
- * Used to order the players based on their order under the parent
+ * Used to sort the players based on their order under the parent
 */
 public class PlayerCompare : IComparer
 {

@@ -18,7 +18,9 @@ public class PlayerMovement : MonoBehaviour
     private AbstractTile[] boardTiles;
     private Player playerComponent;
     [SerializeField] private short currentTileIndex = 0 ;
-    [SerializeField] private short targetTileIndex = 20;
+    [SerializeField] private short targetTileIndex = 0;
+    private short nextTileIndex = 1;
+
     private Vector3 velocity = Vector3.zero; // used by smoothDampen exclusively
 
     // Start is called before the first frame update
@@ -29,14 +31,19 @@ public class PlayerMovement : MonoBehaviour
         playerComponent = GetComponent<Player>();
         boardTiles = generalManager.boardTiles;
         playerIndex = playerComponent.playerIndex;
+        this.enabled = false;
     }
     void Update()
     {
         if (currentTileIndex != targetTileIndex) {
-             targetTileIndex %= (short)boardTiles.Length;
-             currentTileIndex %= (short)boardTiles.Length; // loop around the board
-            if (TraverseUpToTile(currentTileIndex, (short)(currentTileIndex + 1))) {
+
+            //  targetTileIndex %= (short)boardTiles.Length;
+            //  currentTileIndex %= (short)boardTiles.Length; // loop around the board
+
+            if (TraverseUpToTile(currentTileIndex, (short)(nextTileIndex))) {
                 currentTileIndex++;
+                currentTileIndex %= (short)boardTiles.Length; // loop around the board
+                nextTileIndex = (short)((short)(currentTileIndex + 1) % (short)boardTiles.Length);
             }
         } else {
             arrivalProcedure();
@@ -44,12 +51,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public short getTileIndex() {
+        return currentTileIndex;
+    }
+
     /*
      * Used to set the tile locations to start a player movement
     */
-    public void setMovementValues(short currentTileIndex, short targetTileIndex) {
-        this.currentTileIndex = (short)(currentTileIndex % (short)boardTiles.Length); // loop around the board
-        this.targetTileIndex = (short)(targetTileIndex % (short)boardTiles.Length); // loop around the board
+    public void setMovementValues(short diceValue) {
+        // this.currentTileIndex = (short)(currentTileIndex % (short)boardTiles.Length); // loop around the board
+        // this.targetTileIndex = (short)(targetTileIndex % (short)boardTiles.Length); // loop around the board
+        this.targetTileIndex = (short)((this.currentTileIndex + diceValue) % boardTiles.Length);
     }
 
     /*
@@ -101,8 +113,9 @@ public class PlayerMovement : MonoBehaviour
      * the function to move the player from current to the next one
     */
     private bool TraverseUpToTile(short currentTileIndex, short targetTileIndex) {
-        targetTileIndex %= (short)boardTiles.Length;
-        currentTileIndex %= (short)boardTiles.Length;
+        // targetTileIndex %= (short)boardTiles.Length;
+        // currentTileIndex %= (short)boardTiles.Length;
+
         // short currentLocationIndex = currentTileIndex;
         Vector3 currentPosition = boardTiles[currentTileIndex].PlayersLocations[playerIndex];
         // print("target = " + targetTileIndex);

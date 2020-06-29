@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public short playerIndex; // SET BY MAIN MENU. for now, set here
     public PLAYER_COLORS playerColor;
+    private Renderer myRenderer;
     string initialBussiness;
     public PlayerMovement playerMovement;
     float moneyAmount = 5000f;
@@ -18,12 +19,13 @@ public class Player : MonoBehaviour
 
     private void Awake() {
         // playerIndex = 0; // change later through main menu
-
-
+        myRenderer = GetComponent<Renderer>();
     }
 
     private void Start() {
         playerMovement = GetComponent<PlayerMovement>();
+        ColorManager.changeMyRendererColor(myRenderer, playerColor);
+        // this.transform.
     }
 
     public AbstractTile GetCurrentTile() {

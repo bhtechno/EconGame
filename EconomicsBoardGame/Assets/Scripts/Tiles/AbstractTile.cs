@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Project_Enums;
 
 public abstract class AbstractTile : MonoBehaviour
 {
     protected Player owner;
+
+    private TILE_STATUS tileStatus;
     // Where on the tile each player will be placed (global position)
     public Vector3 [] PlayersLocations;
 
@@ -20,8 +23,8 @@ public abstract class AbstractTile : MonoBehaviour
     const short playersNo = 4;
     Vector3 location;
     void Awake() {
-
-        // assign tthe offsets to each player
+        tileStatus = TILE_STATUS.UNOWNED_LAND;
+        // assign the offsets to each player
         PlayerslocationsOffsets = new Vector3[4];
         PlayerslocationsOffsets[0] = new Vector3(-0.75f, 0.45f, 0.75f);
         PlayerslocationsOffsets[1] = new Vector3(0.75f, 0.45f, -0.75f);
@@ -35,7 +38,16 @@ public abstract class AbstractTile : MonoBehaviour
             PlayersLocations[i] = transform.position + Vector3.up * PlayerslocationsOffsets[i].y
             + Vector3.right * PlayerslocationsOffsets[i].x + Vector3.forward * PlayerslocationsOffsets[i].z;
         }
-        // location = transform.position + Vector3.up * 0.5f + Vector3.right * 0.25f;
+    }
+
+    public bool buyLocation(Player buyer) {
+        if (!buyer.MoneyDepositIsPositive(-cost) || owner != null) {
+            return false;
+        }
+        buyer.MoneyChange(-cost);
+        this.owner = buyer;
+        this.tileStatus = TILE_STATUS.OWNED_LAND;
+        return true;
     }
 
     public bool payRent(Player visitor) {
@@ -46,6 +58,5 @@ public abstract class AbstractTile : MonoBehaviour
         }
         return false;
     }
-
     // private Image info;
 }
