@@ -12,12 +12,13 @@ public class Player : MonoBehaviour
     public PlayerMovement playerMovement;
     float moneyAmount = 5000f;
     float valueAmount = 500f;
-    AbstractTile[] OwnedLands; // change later to list, since it's changeable
+    List<AbstractTile> OwnedLands;
 
     // Start is called before the first frame update
     private AbstractTile currentTile;
 
     private void Awake() {
+        OwnedLands = new List<AbstractTile>();
         // playerIndex = 0; // change later through main menu
         myRenderer = GetComponent<Renderer>();
     }
@@ -26,6 +27,10 @@ public class Player : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         ColorManager.changeMyRendererColor(myRenderer, playerColor);
         // this.transform.
+    }
+
+    public void addLandToOwned(AbstractTile boughtTile) {
+        OwnedLands.Add(boughtTile);
     }
 
     public AbstractTile GetCurrentTile() {

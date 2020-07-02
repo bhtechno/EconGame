@@ -47,6 +47,8 @@ public class GUImanager : MonoBehaviour
     /*
      * Given the button type enum, this button will be disabled and become shadowed
     */
+
+
     public static void DisableButton(BUTTON_TYPE buttontype) {
         buttonsDict[buttontype].enabled = false;
         buttonsDict[buttontype].interactable = false;
@@ -58,6 +60,20 @@ public class GUImanager : MonoBehaviour
     public static void EnableButton(BUTTON_TYPE buttontype) {
         buttonsDict[buttontype].enabled = true;
         buttonsDict[buttontype].interactable = true;
+    }
+
+    public void promptTileBuy(Card locationCard) {
+        // show the card, and below it, show buy or skip
+        // after clicking on that, remove the display,
+        // show the end turn thing.
+    }
+
+    public void disableAllButtons() {
+        for (int i = 0; i < gameButtons.Length; i++)
+        {
+            gameButtons[i].enabled = false;
+            gameButtons[i].interactable = false;
+        }
     }
 
 }

@@ -6,11 +6,9 @@ using static Project_Enums;
 public abstract class AbstractTile : MonoBehaviour
 {
     protected Player owner;
-
     private TILE_STATUS tileStatus;
     // Where on the tile each player will be placed (global position)
     public Vector3 [] PlayersLocations;
-
     // Offsets from the middle of the tile for each player
     protected Vector3[] PlayerslocationsOffsets;
 
@@ -21,7 +19,8 @@ public abstract class AbstractTile : MonoBehaviour
     [SerializeField]
 
     const short playersNo = 4;
-    Vector3 location;
+    Card tileCard;
+
     void Awake() {
         tileStatus = TILE_STATUS.UNOWNED_LAND;
         // assign the offsets to each player
@@ -40,10 +39,19 @@ public abstract class AbstractTile : MonoBehaviour
         }
     }
 
+    public Card getTileCard() {
+        return tileCard;
+    }
+
+    public TILE_STATUS GetTILE_STATUS() {
+        return tileStatus;
+    }
+
     public bool buyLocation(Player buyer) {
         if (!buyer.MoneyDepositIsPositive(-cost) || owner != null) {
             return false;
         }
+        buyer.addLandToOwned(this);
         buyer.MoneyChange(-cost);
         this.owner = buyer;
         this.tileStatus = TILE_STATUS.OWNED_LAND;

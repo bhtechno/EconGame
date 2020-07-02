@@ -1,0 +1,16 @@
+{
+    "Items": [
+        {
+            "cardType": "8484239823",
+            "cardDetails": "Powai",
+            "value": "Random Nick",
+	    "playerAffected": "All"
+        },
+	{
+            "cardType": "8484239823",
+            "cardDetails": "Powai",
+            "value": "Random Nick",
+	    "playerAffected": "All"
+        }
+    ]
+}

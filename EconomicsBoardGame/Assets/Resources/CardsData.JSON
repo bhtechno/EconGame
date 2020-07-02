@@ -1,0 +1,17 @@
+{
+    "Card": 
+[
+        {
+            "cardType": "8484239823",
+            "cardDetails": "Powai",
+            "value": 8.7,
+	    "playerAffected": "All"
+        },
+	{
+            "cardType": "8484239823",
+            "cardDetails": "Powai",
+            "value": 5.9,
+	    "playerAffected": "All"
+        }
+]
+}

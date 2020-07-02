@@ -59,9 +59,19 @@ public class GeneralManager : MonoBehaviour
      * of that script.
     */
     private void OnPlayerArrived(EventInfo eventInfo) {
-        print("player finished moving!");
-        GUImanager.EnableButton(BUTTON_TYPE.END_TURN);
         currentPlayer.playerMovement.enabled = false;
+        if (currentPlayer.GetCurrentTile().GetTILE_STATUS() == TILE_STATUS.OWNED_LAND) {
+            // prompt player to pay
+        } else {
+
+
+
+            // prompt player to buy
+        }
+
+        // after the prompt is finished, then allow the player to continue
+
+        GUImanager.EnableButton(BUTTON_TYPE.END_TURN);
     }
 
     /*
