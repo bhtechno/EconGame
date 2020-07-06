@@ -59,17 +59,21 @@ public class GeneralManager : MonoBehaviour
      * of that script.
     */
     private void OnPlayerArrived(EventInfo eventInfo) {
+        AbstractTile currentTile = currentPlayer.GetCurrentTile();
+        // convert tile to interface, to use each tile's type's specific functions
+        ITile currentTileInterface = currentTile as ITile;
+
         currentPlayer.playerMovement.enabled = false;
-        if (currentPlayer.GetCurrentTile().GetTILE_STATUS() == TILE_STATUS.OWNED_LAND) {
+        if (currentTile.GetTILE_STATUS() == TILE_STATUS.OWNED_LAND) {
             // prompt player to pay
         } else {
 
+            // GUImanager.promptTileBuy(currentPlayer.GetCurrentTile().getTileCard());
 
 
             // prompt player to buy
         }
-
-        // after the prompt is finished, then allow the player to continue
+        currentTileInterface.playerArrived();
 
         GUImanager.EnableButton(BUTTON_TYPE.END_TURN);
     }
@@ -108,6 +112,7 @@ public class GeneralManager : MonoBehaviour
         currentPlayer = players[currentPlayerIndex];
         DiceManager.resetDices();
         GUImanager.EnableButton(BUTTON_TYPE.THROW_DICE);
+        GUImanager.removeImage(); // temprory
         startTurn();
         // Also, throw button should be enabled, and made interacable
     }

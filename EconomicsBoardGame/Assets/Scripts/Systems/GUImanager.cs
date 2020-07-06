@@ -10,8 +10,8 @@ public class GUImanager : MonoBehaviour
 
     private static Button[] gameButtons; // all buttons in the scene are put here
     private static Dictionary <BUTTON_TYPE, Button> buttonsDict;
-    // List
-    // Start is called before the first frame update
+
+    private static RawImage image;
 
     private void Awake() {
         int buttonsCount = System.Enum.GetNames(typeof(BUTTON_TYPE)).Length;
@@ -21,7 +21,10 @@ public class GUImanager : MonoBehaviour
     }
     void Start()
     {
-
+        image = GameObject.FindObjectOfType<RawImage>();
+        if (image == null) {
+            print("image is null");
+        }
     }
 
     /*
@@ -62,7 +65,7 @@ public class GUImanager : MonoBehaviour
         buttonsDict[buttontype].interactable = true;
     }
 
-    public void promptTileBuy(Card locationCard) {
+    public static void promptTileBuy(AbstractCard locationCard) {
         // show the card, and below it, show buy or skip
         // after clicking on that, remove the display,
         // show the end turn thing.
@@ -74,6 +77,15 @@ public class GUImanager : MonoBehaviour
             gameButtons[i].enabled = false;
             gameButtons[i].interactable = false;
         }
+    }
+
+    public static void showImage(TILE_TYPE tileType) {
+        image.texture = CardManager.getTileTexture(tileType);
+        image.enabled = true;
+    }
+
+    public static void removeImage() {
+        image.enabled = false;
     }
 
 }

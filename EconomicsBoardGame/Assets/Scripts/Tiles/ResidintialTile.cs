@@ -1,19 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Project_Enums;
 
-public class ResidintialTile : AbstractTile
+public class ResidintialTile : AbstractTile, ITile
 {
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
+    public void playerArrived() {
+         print("residential arrived!");
+         GUImanager.showImage(TILE_TYPE.RESIDENCE);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

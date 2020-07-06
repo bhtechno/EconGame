@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float singleMoveTime = 0.5f;
     [SerializeField] private short playerIndex = -1;
     public float arrivalDistanceSensitivity = 0.05f;
-    private AbstractTile[] boardTiles;
+    [SerializeField] private AbstractTile[] boardTiles;
     private Player playerComponent;
     [SerializeField] private short currentTileIndex = 0 ;
     [SerializeField] private short targetTileIndex = 0;
@@ -119,6 +119,7 @@ public class PlayerMovement : MonoBehaviour
         // short currentLocationIndex = currentTileIndex;
         Vector3 currentPosition = boardTiles[currentTileIndex].PlayersLocations[playerIndex];
         // print("target = " + targetTileIndex);
+        // targetTileIndex %= (short)boardTiles.Length;
         Vector3 TargetPosition = boardTiles[targetTileIndex].PlayersLocations[playerIndex];
         if(OneTileMove(currentPosition, TargetPosition)) {
         // if(twoPointsMovement(currentPosition, TargetPosition)) {

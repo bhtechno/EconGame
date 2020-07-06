@@ -10,6 +10,7 @@ public class DiceCheckZoneScript : MonoBehaviour {
 	public DiceScript dice1;
 	public DiceScript dice2;
 
+	public int waitTimeB4Movement = 2200;
 	private DiceManager diceManager;
 
 	private void Awake() {
@@ -28,8 +29,13 @@ public class DiceCheckZoneScript : MonoBehaviour {
 	*	I check for both dices if they are the ones who are colliding
 	*
 	*/
+	private int lastTrigger = 0; // used to ensure the dice fully stopped moving
 	void OnTriggerStay(Collider col)
 	{
+		// to ensuer dice fully stopped moving b4 checking collisions 
+		if (lastTrigger++ < waitTimeB4Movement * Time.deltaTime)
+			return;
+		lastTrigger = 0;
 		DiceValue(0, col);
 		DiceValue(1, col);
 	}

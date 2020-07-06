@@ -1,10 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static Project_Enums;
 
 public abstract class AbstractTile : MonoBehaviour
 {
+    public struct TileImageInfo {
+        float cost {get; set;}
+        float rentMoney {get; set;}
+        RawImage tileImage {get; set;}
+    }
+
     protected Player owner;
     private TILE_STATUS tileStatus;
     // Where on the tile each player will be placed (global position)
@@ -18,10 +25,13 @@ public abstract class AbstractTile : MonoBehaviour
     protected float rentMoney = 500f;
     [SerializeField]
 
+    private TileImageInfo tileImageInfo;
+
     const short playersNo = 4;
-    Card tileCard;
 
     void Awake() {
+
+        // tileImageInfo.
         tileStatus = TILE_STATUS.UNOWNED_LAND;
         // assign the offsets to each player
         PlayerslocationsOffsets = new Vector3[4];
@@ -39,9 +49,7 @@ public abstract class AbstractTile : MonoBehaviour
         }
     }
 
-    public Card getTileCard() {
-        return tileCard;
-    }
+
 
     public TILE_STATUS GetTILE_STATUS() {
         return tileStatus;
@@ -66,5 +74,5 @@ public abstract class AbstractTile : MonoBehaviour
         }
         return false;
     }
-    // private Image info;
+
 }
