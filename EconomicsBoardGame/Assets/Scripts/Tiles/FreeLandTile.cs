@@ -7,8 +7,11 @@ public class FreeLandTile : AbstractTile, ITile
 {
 
     // Start is called before the first frame update
+    private void Start() {
+        this.tileType = TILE_TYPE.FREE;
+    }
     public void playerArrived() {
          print("free arrived!");
-         GUImanager.showImage(TILE_TYPE.FREE);
+         GUImanager.showImage(TILE_TYPE.FREE, this.tileImageInfo);
     }
 }

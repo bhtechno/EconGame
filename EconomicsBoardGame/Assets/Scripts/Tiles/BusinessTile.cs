@@ -8,10 +8,13 @@ using static Project_Enums;
 public class BusinessTile : AbstractTile, ITile
 {
     public BUSSINESS_TYPE businessType;
+    private void Start() {
+        this.tileType = TILE_TYPE.BUSSINESS;
+    }
 
     public void playerArrived() {
          print("business arrived!");
-         GUImanager.showImage(TILE_TYPE.BUSSINESS);
+         GUImanager.showImage(TILE_TYPE.BUSSINESS, this.tileImageInfo);
     }
 
 }

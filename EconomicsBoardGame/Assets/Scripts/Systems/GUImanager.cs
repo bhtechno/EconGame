@@ -11,8 +11,6 @@ public class GUImanager : MonoBehaviour
     private static Button[] gameButtons; // all buttons in the scene are put here
     private static Dictionary <BUTTON_TYPE, Button> buttonsDict;
 
-    private static RawImage image;
-
     private void Awake() {
         int buttonsCount = System.Enum.GetNames(typeof(BUTTON_TYPE)).Length;
         gameButtons = GameObject.FindObjectsOfType<Button>();
@@ -21,10 +19,7 @@ public class GUImanager : MonoBehaviour
     }
     void Start()
     {
-        image = GameObject.FindObjectOfType<RawImage>();
-        if (image == null) {
-            print("image is null");
-        }
+
     }
 
     /*
@@ -79,13 +74,13 @@ public class GUImanager : MonoBehaviour
         }
     }
 
-    public static void showImage(TILE_TYPE tileType) {
-        image.texture = CardManager.getTileTexture(tileType);
-        image.enabled = true;
+    public static void showImage(TILE_TYPE tileType, AbstractTile.TileImageInfo cardInfo) {
+        CardManager.showImage(tileType, cardInfo);
     }
 
     public static void removeImage() {
-        image.enabled = false;
+        CardManager.removeImage();
     }
+
 
 }

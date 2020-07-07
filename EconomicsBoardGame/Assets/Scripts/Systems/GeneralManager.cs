@@ -73,7 +73,8 @@ public class GeneralManager : MonoBehaviour
 
             // prompt player to buy
         }
-        currentTileInterface.playerArrived();
+        if (currentTile.GetTILE_TYPE() != TILE_TYPE.EMPTY)
+            currentTileInterface.playerArrived();
 
         GUImanager.EnableButton(BUTTON_TYPE.END_TURN);
     }

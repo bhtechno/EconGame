@@ -8,6 +8,10 @@ later, he menu will set it
 4. Important: remove the modula operator in PlayerMvement in the update function, and in the
 up o one tile. They exist just for the debugging to work
 
+
 5. The cards JSON file, and the cards info is placed in resouces, to be able to load easily programatically.
 
+
+6. Check out why some tiles cause trouble when the start, update, or awake functions exist. potentially
+because they also exist in abtractTile.
 6/26: finished playerMovement. Next goal: Set Up a turn system

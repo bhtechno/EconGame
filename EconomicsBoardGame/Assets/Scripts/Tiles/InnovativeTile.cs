@@ -9,9 +9,9 @@ public class InnovativeTile : AbstractTile, ITile
     private INNOVATIVE_TYPE innovativeType;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
+        this.tileType = TILE_TYPE.INNOVATIVE;
     }
 
     public void setInnovativeTypr(INNOVATIVE_TYPE innovativeType) {
@@ -19,7 +19,7 @@ public class InnovativeTile : AbstractTile, ITile
     }
     public void playerArrived() {
          print("Innovative arrived!");
-         GUImanager.showImage(TILE_TYPE.INNOVATIVE);
+         GUImanager.showImage(TILE_TYPE.INNOVATIVE, this.tileImageInfo);
     }
 
 
