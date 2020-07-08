@@ -16,10 +16,12 @@ public class CardManager : MonoBehaviour
     private static TextMeshProUGUI tileNameStatic;
     private static TextMeshProUGUI tileCostStatic;
     private static TextMeshProUGUI tileRentStatic;
+    private static TextMeshProUGUI tileTypeTextStatic;
 
-    [SerializeField] TextMeshProUGUI tileName;
-    [SerializeField] TextMeshProUGUI tileCost;
-    [SerializeField] TextMeshProUGUI tileRent;
+    [SerializeField] TextMeshProUGUI tileName = default;
+    [SerializeField] TextMeshProUGUI tileCost = default;
+    [SerializeField] TextMeshProUGUI tileRent = default;
+    [SerializeField] TextMeshProUGUI tileTypeText = default;
 
     void Start()
     {
@@ -49,6 +51,7 @@ public class CardManager : MonoBehaviour
         tileNameStatic = tileName;
         tileCostStatic = tileCost;
         tileRentStatic = tileRent;
+        tileTypeTextStatic = tileTypeText;
     }
 
     public static Texture getTileTexture(TILE_TYPE tileType) {
@@ -56,18 +59,45 @@ public class CardManager : MonoBehaviour
     }
 
     public static void showImage(TILE_TYPE tileType, AbstractTile.TileImageInfo cardInfo) {
-        // print("show image in card Manager");
-        // print("image name = " + image.name);
-        setCardInfo(cardInfo);
+        setCardInfo(tileType, cardInfo);
         image.gameObject.SetActive(true);
         image.texture = getTileTexture(tileType);
-        // image.enabled = true;
     }
 
-    static void setCardInfo(AbstractTile.TileImageInfo cardInfo) {
+    static void setCardInfo(TILE_TYPE tileType, AbstractTile.TileImageInfo cardInfo) {
         tileNameStatic.text = cardInfo.getName();
         tileCostStatic.text = cardInfo.getCost().ToString();
         tileRentStatic.text = cardInfo.getRent().ToString();
+        switch (tileType) {
+			case TILE_TYPE.BUSSINESS:
+				tileTypeTextStatic.text = "BUSSINESS";
+				break;
+			case TILE_TYPE.EMPTY:
+				tileTypeTextStatic.text = "EMPTY";
+				break;
+			case TILE_TYPE.FACTORY:
+				tileTypeTextStatic.text = "FACTORY";
+				break;
+			case TILE_TYPE.FARM:
+				tileTypeTextStatic.text = "FARM";
+				break;
+			case TILE_TYPE.FREE:
+				tileTypeTextStatic.text = "FREE";
+				break;
+			case TILE_TYPE.INNOVATIVE:
+				tileTypeTextStatic.text = "INNOVATIVE";
+				break;
+            case TILE_TYPE.OTHER:
+                tileTypeTextStatic.text = "SPECIAL";
+                break;
+            case TILE_TYPE.RESIDENCE:
+                tileTypeTextStatic.text = "RESIDENCE";
+                break;
+            case TILE_TYPE.VALUE:
+                tileTypeTextStatic.text = "VALUE BUSSINESS";
+                break;
+		}
+
     }
 
     public static void removeImage() {

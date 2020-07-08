@@ -36,7 +36,7 @@ public abstract class AbstractTile : MonoBehaviour
     // Offsets from the middle of the tile for each player
     protected Vector3[] PlayerslocationsOffsets;
 
-    [SerializeField] string tileName;
+    [SerializeField] string tileName = "";
     [SerializeField] protected float cost = 3000f;
     [SerializeField] protected float rentMoney = 500f;
     [SerializeField] protected TileImageInfo tileImageInfo;
@@ -67,6 +67,9 @@ public abstract class AbstractTile : MonoBehaviour
         tileImageInfo.setValues(this.tileName, this.cost, this.rentMoney);
     }
 
+    public bool IsOwned() {
+        return owner != null;
+    }
 
     public TILE_TYPE GetTILE_TYPE() {
         return tileType;

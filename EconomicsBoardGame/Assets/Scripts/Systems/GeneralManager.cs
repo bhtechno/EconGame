@@ -19,10 +19,6 @@ public class GeneralManager : MonoBehaviour
     private void Awake() {
         // get the board tiles
         boardTiles = board.transform.GetComponentsInChildren<AbstractTile>();
-    }
-
-    void Start()
-    {
         IComparer compareFunction = new PlayerCompare();
         players = GameObject.FindObjectsOfType<Player>();
         Array.Sort(players, compareFunction);
@@ -35,7 +31,10 @@ public class GeneralManager : MonoBehaviour
         }
 
         currentPlayer = players[0];
+    }
 
+    void Start()
+    {
         // Register the function player arrived in the eventSystem, for playerArrived.
         CustomEventSystem.RegisterListener(EVENT_TYPE.PLAYER_ARRIVED, OnPlayerArrived);
         DiceManager.resetDices();
@@ -64,17 +63,20 @@ public class GeneralManager : MonoBehaviour
         ITile currentTileInterface = currentTile as ITile;
 
         currentPlayer.playerMovement.enabled = false;
-        if (currentTile.GetTILE_STATUS() == TILE_STATUS.OWNED_LAND) {
+        if (currentTile.GetTILE_STATUS() != TILE_STATUS.OWNED_LAND) {
             // prompt player to pay
+             if (currentTile.GetTILE_TYPE() != TILE_TYPE.EMPTY) {
+                currentTileInterface.playerArrived();
+                GUImanager.EnableButton(BUTTON_TYPE.BUY);
+            }
+
         } else {
 
             // GUImanager.promptTileBuy(currentPlayer.GetCurrentTile().getTileCard());
 
-
             // prompt player to buy
         }
-        if (currentTile.GetTILE_TYPE() != TILE_TYPE.EMPTY)
-            currentTileInterface.playerArrived();
+
 
         GUImanager.EnableButton(BUTTON_TYPE.END_TURN);
     }
@@ -108,6 +110,7 @@ public class GeneralManager : MonoBehaviour
     public void endTurn() {
         // current player will become next player
         // dice will be enabled
+        GUImanager.DisableButton(BUTTON_TYPE.BUY);
         currentPlayerIndex += 1;
         currentPlayerIndex %= (short)players.Length;
         currentPlayer = players[currentPlayerIndex];
@@ -118,7 +121,17 @@ public class GeneralManager : MonoBehaviour
         // Also, throw button should be enabled, and made interacable
     }
 
-    // TODO: Create a turn system
+    public void buyCurrentTile() {
+        if (currentPlayer.GetCurrentTile().buyLocation(currentPlayer)) {
+            GUImanager.DisableButton(BUTTON_TYPE.BUY);
+        }
+
+    }
+
+    public Player[] getPlayerArray() {
+        return players;
+    }
+
 
 }
 

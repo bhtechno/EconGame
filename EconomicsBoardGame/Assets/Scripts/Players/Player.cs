@@ -10,9 +10,9 @@ public class Player : MonoBehaviour
     private Renderer myRenderer;
     string initialBussiness;
     public PlayerMovement playerMovement;
-    float moneyAmount = 5000f;
-    float valueAmount = 500f;
-    List<AbstractTile> OwnedLands;
+    float moneyAmount = 15000f;
+    float valueAmount = 1500f;
+    [SerializeField] List<AbstractTile> OwnedLands;
 
     // Start is called before the first frame update
     private AbstractTile currentTile;
@@ -29,6 +29,9 @@ public class Player : MonoBehaviour
         // this.transform.
     }
 
+    /*
+    * used by the tile to assign itself to this player
+    */
     public void addLandToOwned(AbstractTile boughtTile) {
         OwnedLands.Add(boughtTile);
     }
