@@ -11,9 +11,15 @@ public class PlayersInfoManager : MonoBehaviour
     [SerializeField] Player[] players;
 
     [SerializeField] public GameObject playerInfoButtonPrefab = default;
+    [SerializeField] public GameObject playerOwnedLandsSlotsPrefab = default;
+    [SerializeField] private GameObject fullInfoPanel = default;
     [SerializeField] private GameObject playersInfoButtonsParent = default;
+    [SerializeField] private GameObject playersOwnedLandsSlotsParent = default;
+    [SerializeField] private GameObject moneyGameObject;
+    [SerializeField] private GameObject ValueGameObject;
 
-    private Button[] playersInfoButtons;
+    private static Button[] playersInfoButtons;
+    private static RawImage[] PlayersGlowImage;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +27,7 @@ public class PlayersInfoManager : MonoBehaviour
         players = generalManager.getPlayerArray();
         InitiatePlayersInfoButtons();
         assignButtonsOnClickFunction();
+        destroyOwnedLandsSlots();
     }
 
     /*
@@ -36,9 +43,9 @@ public class PlayersInfoManager : MonoBehaviour
         // get the created buttons as gameobjects, and put in the temprory array
         GameObject[] playersButtonsObject;
         playersButtonsObject = new GameObject[players.Length];
-
         for (int i = 0; i < playersInfoButtonsParent.transform.childCount; i++)
             playersButtonsObject[i] = playersInfoButtonsParent.transform.GetChild(i).gameObject;
+
 
         assignPlayerNumberstoButtons(playersButtonsObject);
         // get the button component of each "Button object" and assign it to the array
@@ -49,6 +56,19 @@ public class PlayersInfoManager : MonoBehaviour
             playersInfoButtons[i] = playersButtonsObject[i].GetComponent<Button>();
             playersInfoButtons[i].name = i.ToString();
         }
+        PlayersGlowImage = new RawImage[playersButtonsObject.Length];
+        // Get the rawImageGloe component of each player's Button
+        for (int i = 0; i < playersButtonsObject.Length; i++)
+        {
+            PlayersGlowImage[i] = playersButtonsObject[i].GetComponentInChildren<RawImage>();
+        }
+
+    }
+
+    private void initiatePlayerTileSlots() {
+        // create the actiual slots
+
+
     }
 
     private void assignButtonsOnClickFunction() {
@@ -74,9 +94,66 @@ public class PlayersInfoManager : MonoBehaviour
         }
     }
 
-    public void showPlayersInfo(short index) {
-        print("hello " + index);
+    public static void disableGlowofPlayer(short index) {
+        PlayersGlowImage[index].enabled = false;
+    }
+    public static void enableGlowofPlayer(short index) {
+        PlayersGlowImage[index].enabled = true;
     }
 
 
+    private void fillPlayersOwnedLandSlots(short playerIndex) {
+         // istantiate as many slots as the player has lands
+         List<AbstractTile> playerTiles = players[playerIndex].getOwnedLands();
+         print("tile no = " + playerTiles.Count);
+         for (int i = 0; i < playerTiles.Count; i++) {
+            if(Instantiate(playerOwnedLandsSlotsPrefab, playersOwnedLandsSlotsParent.transform) == null)
+                print("NULL!");
+
+         }
+
+        // get the full slot prefab as a gameobject
+        GameObject[] playersLandsSlots;
+        playersLandsSlots = new GameObject[playerTiles.Count];
+        for (int i = 0; i < playersOwnedLandsSlotsParent.transform.childCount; i++)
+            playersLandsSlots[i] = playersOwnedLandsSlotsParent.transform.GetChild(i).gameObject;
+
+        // Get the TextMeshPro component of each player's Button
+        TextMeshProUGUI[] slotsTexts = new TextMeshProUGUI[playerTiles.Count];
+        for (int i = 0; i < playerTiles.Count; i++)
+        {
+            slotsTexts[i] = playersLandsSlots[i].GetComponentInChildren<TextMeshProUGUI>();
+        }
+
+        // Fill each text component with the names of the slots
+        for (int i = 0; i < playerTiles.Count; i++)
+        {
+            slotsTexts[i].text = playerTiles[i].getTileName();
+        }
+    }
+
+    private void updatePlayerMoney(short index) {
+        moneyGameObject.GetComponent<TextMeshProUGUI>().text = players[index].getMoneyBalance().ToString();
+        ValueGameObject.GetComponent<TextMeshProUGUI>().text = players[index].getValueBalance().ToString();
+    }
+
+    private void destroyOwnedLandsSlots() {
+        for (int i = 0; i < playersOwnedLandsSlotsParent.transform.childCount; i++)
+        {
+            GameObject.Destroy( playersOwnedLandsSlotsParent.transform.GetChild(i).gameObject);
+        }
+    }
+
+
+    public void showPlayersInfo(short index) {
+        if (fullInfoPanel.activeSelf) {
+            destroyOwnedLandsSlots();
+            fullInfoPanel.SetActive(false);
+        } else {
+            fullInfoPanel.SetActive(true);
+            updatePlayerMoney(index);
+            fillPlayersOwnedLandSlots(index);
+        }
+        // print("hello " + index);
+    }
 }

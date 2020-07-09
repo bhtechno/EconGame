@@ -87,5 +87,10 @@ public class GUImanager : MonoBehaviour
         CardManager.removeImage();
     }
 
-
+    public static void disableGlowofPlayer(short index) {
+        PlayersInfoManager.disableGlowofPlayer(index);
+    }
+    public static void enableGlowofPlayer(short index) {
+        PlayersInfoManager.enableGlowofPlayer(index);
+    }
 }

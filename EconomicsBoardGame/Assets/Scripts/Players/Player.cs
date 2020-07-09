@@ -29,6 +29,18 @@ public class Player : MonoBehaviour
         // this.transform.
     }
 
+    public List<AbstractTile> getOwnedLands() {
+        return OwnedLands;
+    }
+
+    public float getMoneyBalance() {
+        return moneyAmount;
+    }
+
+    public float getValueBalance() {
+        return valueAmount;
+    }
+
     /*
     * used by the tile to assign itself to this player
     */

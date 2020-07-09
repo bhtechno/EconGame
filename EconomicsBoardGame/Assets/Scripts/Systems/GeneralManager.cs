@@ -88,6 +88,7 @@ public class GeneralManager : MonoBehaviour
         // allow the current player to throw a dice, or do any possible action at this time
         // ex. trade, mortgage, charity, etc.
         // STATUS: WAITING FOR DICE THROW
+        GUImanager.enableGlowofPlayer(currentPlayerIndex);
         GUImanager.DisableButton(BUTTON_TYPE.END_TURN);
         GUImanager.EnableButton(BUTTON_TYPE.THROW_DICE);
         // after Dice throw:
@@ -110,6 +111,7 @@ public class GeneralManager : MonoBehaviour
     public void endTurn() {
         // current player will become next player
         // dice will be enabled
+        GUImanager.disableGlowofPlayer(currentPlayerIndex);
         GUImanager.DisableButton(BUTTON_TYPE.BUY);
         currentPlayerIndex += 1;
         currentPlayerIndex %= (short)players.Length;
