@@ -5,6 +5,7 @@ using static Project_Enums;
 
 public class Player : MonoBehaviour
 {
+    // private static short playersTotal = 0;
     public short playerIndex; // SET BY MAIN MENU. for now, set here
     public PLAYER_COLORS playerColor;
     private Renderer myRenderer;

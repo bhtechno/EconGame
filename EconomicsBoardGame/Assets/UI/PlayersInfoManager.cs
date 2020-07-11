@@ -15,8 +15,8 @@ public class PlayersInfoManager : MonoBehaviour
     [SerializeField] private GameObject fullInfoPanel = default;
     [SerializeField] private GameObject playersInfoButtonsParent = default;
     [SerializeField] private GameObject playersOwnedLandsSlotsParent = default;
-    [SerializeField] private GameObject moneyGameObject;
-    [SerializeField] private GameObject ValueGameObject;
+    [SerializeField] private GameObject moneyGameObject = default;
+    [SerializeField] private GameObject ValueGameObject = default;
 
     private static Button[] playersInfoButtons;
     private static RawImage[] PlayersGlowImage;

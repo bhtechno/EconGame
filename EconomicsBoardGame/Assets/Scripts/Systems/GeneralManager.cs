@@ -12,6 +12,8 @@ public class GeneralManager : MonoBehaviour
     private Player currentPlayer; // current player. Both this and the movement need to be updated each turn.
     private short currentPlayerIndex = 0;
 
+    public GameObject playersParent;
+    public GameObject playerPrefab;
     // what tile each player currently resides.
     // player1: [0], player2: [1], etc.
     // AbstractTile[] playersLocations;
@@ -20,8 +22,13 @@ public class GeneralManager : MonoBehaviour
         // get the board tiles
         boardTiles = board.transform.GetComponentsInChildren<AbstractTile>();
         IComparer compareFunction = new PlayerCompare();
-        players = GameObject.FindObjectsOfType<Player>();
-        Array.Sort(players, compareFunction);
+        // players = GameObject.FindObjectsOfType<Player>();
+        // Array.Sort(players, compareFunction);
+        for (int i = 0; i < GameInfo.playersNo; i++)
+            Instantiate(playerPrefab, playersParent.transform);
+
+        players = playersParent.GetComponentsInChildren<Player>();
+
         // find players and select first one
         for (short i = 0; i < GameInfo.playersNo; i++)
         {
@@ -35,9 +42,9 @@ public class GeneralManager : MonoBehaviour
 
     void Start()
     {
+        DiceManager.resetDices();
         // Register the function player arrived in the eventSystem, for playerArrived.
         CustomEventSystem.RegisterListener(EVENT_TYPE.PLAYER_ARRIVED, OnPlayerArrived);
-        DiceManager.resetDices();
         startTurn();
     }
 

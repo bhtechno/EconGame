@@ -34,13 +34,13 @@ public class CardManager : MonoBehaviour
     tilesCardsBackgrounds = new Dictionary<TILE_TYPE, Texture>();
     // public enum TILE_TYPE {FREE, BUSSINESS, RESIDENCE, INNOVATIVE, VALUE, FARM, OTHER};
 
-        tilesCardsBackgrounds.Add(TILE_TYPE.FREE, Resources.Load<Texture>("FreeInfo"));
-        tilesCardsBackgrounds.Add(TILE_TYPE.BUSSINESS,Resources.Load<Texture>("BusinessInfo"));
-        tilesCardsBackgrounds.Add(TILE_TYPE.RESIDENCE, Resources.Load<Texture>("ResidencyInfo"));
-        tilesCardsBackgrounds.Add(TILE_TYPE.INNOVATIVE, Resources.Load<Texture>("InnovativeInfo"));
-        tilesCardsBackgrounds.Add(TILE_TYPE.VALUE,Resources.Load<Texture>("ValueInfo"));
-        tilesCardsBackgrounds.Add(TILE_TYPE.FARM,Resources.Load<Texture>("FarmInfo"));
-        tilesCardsBackgrounds.Add(TILE_TYPE.OTHER,Resources.Load<Texture>("OtherInfo"));
+        tilesCardsBackgrounds.Add(TILE_TYPE.FREE, Resources.Load<Texture>("Cards/FreeInfo"));
+        tilesCardsBackgrounds.Add(TILE_TYPE.BUSSINESS,Resources.Load<Texture>("Cards/BusinessInfo"));
+        tilesCardsBackgrounds.Add(TILE_TYPE.RESIDENCE, Resources.Load<Texture>("Cards/ResidencyInfo"));
+        tilesCardsBackgrounds.Add(TILE_TYPE.INNOVATIVE, Resources.Load<Texture>("Cards/InnovativeInfo"));
+        tilesCardsBackgrounds.Add(TILE_TYPE.VALUE,Resources.Load<Texture>("Cards/ValueInfo"));
+        tilesCardsBackgrounds.Add(TILE_TYPE.FARM,Resources.Load<Texture>("Cards/FarmInfo"));
+        tilesCardsBackgrounds.Add(TILE_TYPE.OTHER,Resources.Load<Texture>("Cards/OtherInfo"));
         if (tilesCardsBackgrounds.Count == 0 || tilesCardsBackgrounds[TILE_TYPE.FREE] == null) {
             print("ISSUE WITH LOADING!!");
         }
