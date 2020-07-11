@@ -15,3 +15,6 @@ up o one tile. They exist just for the debugging to work
 6. Check out why some tiles cause trouble when the start, update, or awake functions exist. potentially
 because they also exist in abtractTile.
 6/26: finished playerMovement. Next goal: Set Up a turn system
+
+7. Figured out that some elements as prefabs do not get loaded, and will try moving them to resources folder and
+check if that works. (The error occured when trying in the android device)

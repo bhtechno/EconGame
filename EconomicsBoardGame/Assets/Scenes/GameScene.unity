@@ -1503,8 +1503,6 @@ MonoBehaviour:
   board: {fileID: 535948459}
   boardTiles: []
   playersParent: {fileID: 200793861}
-  playerPrefab: {fileID: 2458725469838837515, guid: cdd43d7ac1dd44546b23ee2d39dbf93b,
-    type: 3}
   players: []
 --- !u!4 &860139580
 Transform:

@@ -13,12 +13,13 @@ public class GeneralManager : MonoBehaviour
     private short currentPlayerIndex = 0;
 
     public GameObject playersParent;
-    public GameObject playerPrefab;
+    private GameObject playerPrefab;
     // what tile each player currently resides.
     // player1: [0], player2: [1], etc.
     // AbstractTile[] playersLocations;
     [SerializeField] Player[] players;
     private void Awake() {
+        loadPrefabsFromResources();
         // get the board tiles
         boardTiles = board.transform.GetComponentsInChildren<AbstractTile>();
         IComparer compareFunction = new PlayerCompare();
@@ -28,9 +29,20 @@ public class GeneralManager : MonoBehaviour
             Instantiate(playerPrefab, playersParent.transform);
 
         players = playersParent.GetComponentsInChildren<Player>();
-
+        print("Players. Length = " + players.Length + "Gameinfo players.No:" + GameInfo.playersNo);
+        print("\nGameInfo playercolors arr length" + GameInfo.playersColors.Length);
+        print("boardTiles[0].playerLocations length" + boardTiles[0].PlayersLocations.Length);
         // find players and select first one
-        for (short i = 0; i < GameInfo.playersNo; i++)
+
+    }
+
+    private void loadPrefabsFromResources() {
+        playerPrefab = Resources.Load("Prefabs/PlayerPrefab") as GameObject;
+    }
+
+    void Start()
+    {
+         for (short i = 0; i < GameInfo.playersNo; i++)
         {
             players[i].playerIndex = i;
             players[i].playerColor = GameInfo.playersColors[i];
@@ -38,10 +50,6 @@ public class GeneralManager : MonoBehaviour
         }
 
         currentPlayer = players[0];
-    }
-
-    void Start()
-    {
         DiceManager.resetDices();
         // Register the function player arrived in the eventSystem, for playerArrived.
         CustomEventSystem.RegisterListener(EVENT_TYPE.PLAYER_ARRIVED, OnPlayerArrived);

@@ -24,10 +24,16 @@ public class PlayersInfoManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // loadPrefabsFromResources();
         players = generalManager.getPlayerArray();
         InitiatePlayersInfoButtons();
         assignButtonsOnClickFunction();
         destroyOwnedLandsSlots();
+    }
+
+    private void loadPrefabsFromResources() {
+        playerInfoButtonPrefab =  Resources.Load("Prefabs/PlayerInfoButton") as GameObject;
+        playerOwnedLandsSlotsPrefab =  Resources.Load("Prefabs/LandInfoSlot") as GameObject;
     }
 
     /*

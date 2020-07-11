@@ -106,7 +106,7 @@ public class CardManager : MonoBehaviour
     }
 
     void loadJsonCards() {
-        TextAsset jsonFileAsset = Resources.Load("CardsData") as TextAsset;
+        TextAsset jsonFileAsset = Resources.Load("Cards/CardsData") as TextAsset;
         if (jsonFileAsset != null) {
             cards = JsonUtility.FromJson<CardsList>(jsonFileAsset.text);
             foreach (AbstractCard card in cards.Card)
