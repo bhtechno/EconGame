@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private short currentTileIndex = 0 ;
     [SerializeField] private short targetTileIndex = 0;
     private short nextTileIndex = 1;
+    [SerializeField] private bool giveIncome = true;
 
     private Vector3 velocity = Vector3.zero; // used by smoothDampen exclusively
 
@@ -113,23 +114,22 @@ public class PlayerMovement : MonoBehaviour
      * the function to move the player from current to the next one
     */
     private bool TraverseUpToTile(short currentTileIndex, short targetTileIndex) {
-        // targetTileIndex %= (short)boardTiles.Length;
-        // currentTileIndex %= (short)boardTiles.Length;
 
-        // short currentLocationIndex = currentTileIndex;
         Vector3 currentPosition = boardTiles[currentTileIndex].PlayersLocations[playerIndex];
-        // print("target = " + targetTileIndex);
-        // targetTileIndex %= (short)boardTiles.Length;
         Vector3 TargetPosition = boardTiles[targetTileIndex].PlayersLocations[playerIndex];
         if(OneTileMove(currentPosition, TargetPosition)) {
-        // if(twoPointsMovement(currentPosition, TargetPosition)) {
+            if (giveIncome) {
+                if ((currentTileIndex == boardTiles.Length - 1)
+                    && (targetTileIndex == 0) ) {
+                CustomEventSystem.fireEvent(EVENT_TYPE.GIVE_INCOME,
+                     new EventInfo(playerIndex));
+                }
+            }
             return true;
-            // move to the next Tile. Change the current And Target positions
         } else {
             return false;
         }
     }
-
     /*
      * Returns number of moves in between the two given indices
     */

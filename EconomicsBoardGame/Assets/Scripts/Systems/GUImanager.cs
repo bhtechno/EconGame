@@ -13,15 +13,29 @@ public class GUImanager : MonoBehaviour
     [SerializeField] private Button throwButton = default;
     [SerializeField] private Button EndTurnButton = default;
     [SerializeField] private Button buyButton = default;
+    [SerializeField] private GameObject playersScrollList = default;
+    [SerializeField] public GameObject jobSelectionPanel = default;
+    [SerializeField] private static GameObject jobSelectionPanelStatic = default;
+    private static GameObject playersScrollListStatic = default;
 
 
     private void Awake() {
         int buttonsCount = System.Enum.GetNames(typeof(BUTTON_TYPE)).Length;
         buttonsDict = new Dictionary<BUTTON_TYPE, Button>();
+        initializeStaticVariables();
         assignButtonsToDictionary();
+    }
+
+    public static void setJobSelectionStatus(bool status) {
+        jobSelectionPanelStatic.SetActive(status);
     }
     void Start()
     {
+    }
+
+    private void initializeStaticVariables() {
+        playersScrollListStatic = playersScrollList;
+        jobSelectionPanelStatic = jobSelectionPanel;
     }
 
     /*
@@ -85,6 +99,10 @@ public class GUImanager : MonoBehaviour
 
     public static void removeImage() {
         CardManager.removeImage();
+    }
+
+    public static void setPlayerListGUI(bool status) {
+        playersScrollListStatic.SetActive(status);
     }
 
     public static void disableGlowofPlayer(short index) {

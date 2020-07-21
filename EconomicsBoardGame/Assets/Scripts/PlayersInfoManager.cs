@@ -25,7 +25,7 @@ public class PlayersInfoManager : MonoBehaviour
     void Start()
     {
         // loadPrefabsFromResources();
-        players = generalManager.getPlayerArray();
+        players = generalManager.getPlayersArray();
         InitiatePlayersInfoButtons();
         assignButtonsOnClickFunction();
         destroyOwnedLandsSlots();
@@ -52,7 +52,6 @@ public class PlayersInfoManager : MonoBehaviour
         for (int i = 0; i < playersInfoButtonsParent.transform.childCount; i++)
             playersButtonsObject[i] = playersInfoButtonsParent.transform.GetChild(i).gameObject;
 
-
         assignPlayerNumberstoButtons(playersButtonsObject);
         // get the button component of each "Button object" and assign it to the array
         // this will be used later to assign OnClick functions
@@ -73,12 +72,13 @@ public class PlayersInfoManager : MonoBehaviour
 
     private void initiatePlayerTileSlots() {
         // create the actiual slots
-
-
     }
 
+    /*
+     * Function will assign each player's info button with the listener that
+     * will show the correct player's information.
+     */
     private void assignButtonsOnClickFunction() {
-
         foreach (Button buttton in playersInfoButtons)
         {
             buttton.onClick.AddListener(() => {
@@ -107,17 +107,18 @@ public class PlayersInfoManager : MonoBehaviour
         PlayersGlowImage[index].enabled = true;
     }
 
-
+    /*
+     * Function will fill the Owned Land slots based on the given
+     * player index.
+     */
     private void fillPlayersOwnedLandSlots(short playerIndex) {
-         // istantiate as many slots as the player has lands
+         // instantiate as many slots as the player has lands
          List<AbstractTile> playerTiles = players[playerIndex].getOwnedLands();
-         print("tile no = " + playerTiles.Count);
          for (int i = 0; i < playerTiles.Count; i++) {
             if(Instantiate(playerOwnedLandsSlotsPrefab, playersOwnedLandsSlotsParent.transform) == null)
                 print("NULL!");
 
          }
-
         // get the full slot prefab as a gameobject
         GameObject[] playersLandsSlots;
         playersLandsSlots = new GameObject[playerTiles.Count];
@@ -138,11 +139,18 @@ public class PlayersInfoManager : MonoBehaviour
         }
     }
 
+    /*
+     * Get the latest player's money, and update the GUI
+     */
     private void updatePlayerMoney(short index) {
         moneyGameObject.GetComponent<TextMeshProUGUI>().text = players[index].getMoneyBalance().ToString();
         ValueGameObject.GetComponent<TextMeshProUGUI>().text = players[index].getValueBalance().ToString();
     }
 
+    /*
+     * Upon exit from the selection, the selected players land slots GUI will
+     * be destroyed
+     */
     private void destroyOwnedLandsSlots() {
         for (int i = 0; i < playersOwnedLandsSlotsParent.transform.childCount; i++)
         {
@@ -151,6 +159,11 @@ public class PlayersInfoManager : MonoBehaviour
     }
 
 
+    /*
+     * If the player info is already open, the touching the button will remove
+     * it. Otherwise, it will show the information of the player, and will update
+     * the player's money.
+     */
     public void showPlayersInfo(short index) {
         if (fullInfoPanel.activeSelf) {
             destroyOwnedLandsSlots();
@@ -160,6 +173,5 @@ public class PlayersInfoManager : MonoBehaviour
             updatePlayerMoney(index);
             fillPlayersOwnedLandSlots(index);
         }
-        // print("hello " + index);
     }
 }

@@ -6,38 +6,47 @@ using static Project_Enums;
 
 public class GeneralManager : MonoBehaviour
 {
-
     public GameObject board;
     public AbstractTile[] boardTiles;
     private Player currentPlayer; // current player. Both this and the movement need to be updated each turn.
     private short currentPlayerIndex = 0;
-
     public GameObject playersParent;
     private GameObject playerPrefab;
     // what tile each player currently resides.
     // player1: [0], player2: [1], etc.
-    // AbstractTile[] playersLocations;
     [SerializeField] Player[] players;
     private void Awake() {
         loadPrefabsFromResources();
         // get the board tiles
         boardTiles = board.transform.GetComponentsInChildren<AbstractTile>();
-        IComparer compareFunction = new PlayerCompare();
-        // players = GameObject.FindObjectsOfType<Player>();
-        // Array.Sort(players, compareFunction);
+        // IComparer compareFunction = new PlayerCompare();
         for (int i = 0; i < GameInfo.playersNo; i++)
             Instantiate(playerPrefab, playersParent.transform);
 
         players = playersParent.GetComponentsInChildren<Player>();
-        print("Players. Length = " + players.Length + "Gameinfo players.No:" + GameInfo.playersNo);
-        print("\nGameInfo playercolors arr length" + GameInfo.playersColors.Length);
-        print("boardTiles[0].playerLocations length" + boardTiles[0].PlayersLocations.Length);
-        // find players and select first one
-
     }
 
     private void loadPrefabsFromResources() {
         playerPrefab = Resources.Load("Prefabs/PlayerPrefab") as GameObject;
+    }
+
+    private void enableBusinessSelection() {
+
+    }
+    private void removeInitialGUI() {
+        GUImanager.DisableButton(BUTTON_TYPE.END_TURN);
+        GUImanager.DisableButton(BUTTON_TYPE.THROW_DICE);
+        GUImanager.setPlayerListGUI(false);
+    }
+    public void enableInitialGUIandStart() {
+        GUImanager.EnableButton(BUTTON_TYPE.END_TURN);
+        GUImanager.EnableButton(BUTTON_TYPE.THROW_DICE);
+        GUImanager.setPlayerListGUI(true);
+        for (int i = 0; i < GameInfo.playersNo; i++)
+        {
+            players[i].calculateIncome();
+        }
+        startTurn();
     }
 
     void Start()
@@ -53,7 +62,11 @@ public class GeneralManager : MonoBehaviour
         DiceManager.resetDices();
         // Register the function player arrived in the eventSystem, for playerArrived.
         CustomEventSystem.RegisterListener(EVENT_TYPE.PLAYER_ARRIVED, OnPlayerArrived);
-        startTurn();
+        // Register the function give income in the eventSystem.
+        CustomEventSystem.RegisterListener(EVENT_TYPE.GIVE_INCOME, givePlayerIncome);
+
+        removeInitialGUI();
+        GUImanager.setJobSelectionStatus(true);
     }
 
     // Update is called once per frame
@@ -88,12 +101,13 @@ public class GeneralManager : MonoBehaviour
         } else {
 
             // GUImanager.promptTileBuy(currentPlayer.GetCurrentTile().getTileCard());
-
             // prompt player to buy
         }
-
-
         GUImanager.EnableButton(BUTTON_TYPE.END_TURN);
+    }
+
+    private void givePlayerIncome(EventInfo eventInfo) {
+        players[eventInfo.getPlayerIndex()].giveIncome();
     }
 
     /*
@@ -112,11 +126,6 @@ public class GeneralManager : MonoBehaviour
         // events should be fired. Buy land, pull card, etc.
         // also, all options before the hrow should be open.
         // enable the button to end the turn
-
-
-        //     // currentPlayer.setCurrentTile()
-        //     // currentPlayerMovement.setMovementValues()
-
 
     }
 
@@ -142,14 +151,18 @@ public class GeneralManager : MonoBehaviour
         if (currentPlayer.GetCurrentTile().buyLocation(currentPlayer)) {
             GUImanager.DisableButton(BUTTON_TYPE.BUY);
         }
-
     }
 
-    public Player[] getPlayerArray() {
+    public Player[] getPlayersArray() {
         return players;
     }
 
-
+    public void setPlayersJobs(JobPanel.JobInformation[] playersJobsArray) {
+        for (int i = 0; i < GameInfo.playersNo; i++)
+        {
+            players[i].setJobInfoSruct(playersJobsArray[i]);
+        }
+    }
 }
 
 
@@ -159,8 +172,6 @@ public class GeneralManager : MonoBehaviour
 public class PlayerCompare : IComparer
 {
    public int Compare(object p1, object p2) {
-        // GameObject frstP = (GameObject)p1;
-        // GameObject scndP = (GameObject)p2;
         return ((Player)(p1)).transform.GetSiblingIndex().CompareTo(((Player)p2).transform.GetSiblingIndex());
     }
 }
