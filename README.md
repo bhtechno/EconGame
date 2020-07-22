@@ -12,6 +12,8 @@ Prefabs: Represents complex Gameobjects already tuned, edited, or changed in any
 
 Scripts: All scripts in unity that inherit monobehavior are considered components. Components can be attached to any Gameobject, and can control other
 components in the object, or other objects, if references are made. All scripts in the above path are custom written.
+To follow the game's progession, start at GameInfo.cs, which is the controller of the pregame menu. For the game, check GeneralManager.cs which managers
+the game's flow.
 
 IMPORTANT NOTE: Unity allows setting refernces and variables from within the editor, and as such some variables might not appear to be set 
 in the scripts, because they were set from the editor. Usually if a "variable = default" is found, it's probably being set in the editor.
