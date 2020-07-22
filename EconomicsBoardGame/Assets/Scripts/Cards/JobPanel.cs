@@ -49,13 +49,13 @@ public class JobPanel : MonoBehaviour
         currentCurreny1Profit = initialCurrency1Profit;
         currentCurrency2Profit = initialCurrency2Profit;
         yellowBackImage = this.GetComponent<RawImage>();
-        gUI.initializeCard(title, initialCurrency1Profit, initialCurrency2Profit,
-         Currency1GrowthRate, Currency2GrowthRate, currentCurreny1Profit,
-          currentCurrency2Profit, yellowBackImage);
+        gUI.initializeCard(title, initialCurrency1Profit, initialCurrency2Profit, Currency1GrowthRate,
+                            Currency2GrowthRate, currentCurreny1Profit,
+                            currentCurrency2Profit, yellowBackImage);
         jobStruct = new JobInformation();
-        jobStruct.initialize(title, initialCurrency1Profit, initialCurrency2Profit,
-         Currency1GrowthRate, Currency2GrowthRate, currentCurreny1Profit,
-          currentCurrency2Profit, jobTypeEnum);
+        jobStruct.initialize(title, initialCurrency1Profit, initialCurrency2Profit, Currency1GrowthRate,
+                            Currency2GrowthRate, currentCurreny1Profit,
+                            currentCurrency2Profit, jobTypeEnum);
         panelButton = gUI.getPanelButton();
     }
     public JobInformation getJobInformation() {
@@ -64,7 +64,6 @@ public class JobPanel : MonoBehaviour
     public void setIsSelected(bool status) {
         gUI.setIsSelected(status);
     }
-
     public Button getPanelButton() {
         return panelButton;
     }

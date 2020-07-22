@@ -5,8 +5,7 @@ using static Project_Enums;
 
 public class Player : MonoBehaviour
 {
-    // private static short playersTotal = 0;
-    public short playerIndex; // SET BY MAIN MENU. for now, set here
+    public short playerIndex; // SET BY MAIN MENU.
     public PLAYER_COLORS playerColor;
     private Renderer myRenderer;
     public PlayerMovement playerMovement;
@@ -14,7 +13,6 @@ public class Player : MonoBehaviour
     float valueAmount = 1500f;
     float income1 = 0;
     float income2 = 0;
-
     [SerializeField] List<AbstractTile> OwnedLands;
     // Start is called before the first frame update
     private AbstractTile currentTile;
@@ -22,14 +20,12 @@ public class Player : MonoBehaviour
     [SerializeField] JobPanel.JobInformation jobInformationStruct = default;
     private void Awake() {
         OwnedLands = new List<AbstractTile>();
-        // playerIndex = 0; // change later through main menu
         myRenderer = GetComponent<Renderer>();
     }
 
     private void Start() {
         playerMovement = GetComponent<PlayerMovement>();
         ColorManager.changeMyRendererColor(myRenderer, playerColor);
-        // this.transform.
     }
     /*
      * This function receives the initial job struct formed after the player

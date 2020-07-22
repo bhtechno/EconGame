@@ -21,11 +21,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private short targetTileIndex = 0;
     private short nextTileIndex = 1;
     [SerializeField] private bool giveIncome = true;
-
     private Vector3 velocity = Vector3.zero; // used by smoothDampen exclusively
 
     // Start is called before the first frame update
-
     void Start()
     {
         generalManager = GameObject.FindObjectOfType<GeneralManager>();
@@ -119,10 +117,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 TargetPosition = boardTiles[targetTileIndex].PlayersLocations[playerIndex];
         if(OneTileMove(currentPosition, TargetPosition)) {
             if (giveIncome) {
-                if ((currentTileIndex == boardTiles.Length - 1)
-                    && (targetTileIndex == 0) ) {
-                CustomEventSystem.fireEvent(EVENT_TYPE.GIVE_INCOME,
-                     new EventInfo(playerIndex));
+                if ((currentTileIndex == boardTiles.Length - 1) && (targetTileIndex == 0) ) {
+                    CustomEventSystem.fireEvent(EVENT_TYPE.GIVE_INCOME, new EventInfo(playerIndex));
                 }
             }
             return true;

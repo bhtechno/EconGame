@@ -35,15 +35,12 @@ public abstract class AbstractTile : MonoBehaviour
     public Vector3 [] PlayersLocations;
     // Offsets from the middle of the tile for each player
     protected Vector3[] PlayerslocationsOffsets;
-
     [SerializeField]  string tileName = "";
     [SerializeField] protected float cost = 3000f;
     [SerializeField] protected float rentMoney = 500f;
     [SerializeField] protected TileImageInfo tileImageInfo;
     protected TILE_TYPE tileType;
-
     const short playersNo = 4;
-
     void Awake() {
 
         // tileImageInfo.

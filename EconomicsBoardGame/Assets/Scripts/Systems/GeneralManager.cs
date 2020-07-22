@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Project_Enums;
-
 public class GeneralManager : MonoBehaviour
 {
     public GameObject board;

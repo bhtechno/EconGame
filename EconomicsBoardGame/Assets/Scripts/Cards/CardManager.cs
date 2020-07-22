@@ -12,7 +12,6 @@ public class CardManager : MonoBehaviour
     private static Dictionary <TILE_TYPE, Texture> tilesCardsBackgrounds;
     private static RawImage image;
     public RawImage nonStaticImage;
-
     private static TextMeshProUGUI tileNameStatic;
     private static TextMeshProUGUI tileCostStatic;
     private static TextMeshProUGUI tileRentStatic;
@@ -75,16 +74,16 @@ public class CardManager : MonoBehaviour
 			case TILE_TYPE.EMPTY:
 				tileTypeTextStatic.text = "EMPTY";
 				break;
-			case TILE_TYPE.FACTORY:
+		    case TILE_TYPE.FACTORY:
 				tileTypeTextStatic.text = "FACTORY";
 				break;
-			case TILE_TYPE.FARM:
+		    case TILE_TYPE.FARM:
 				tileTypeTextStatic.text = "FARM";
 				break;
-			case TILE_TYPE.FREE:
+		    case TILE_TYPE.FREE:
 				tileTypeTextStatic.text = "FREE";
 				break;
-			case TILE_TYPE.INNOVATIVE:
+		    case TILE_TYPE.INNOVATIVE:
 				tileTypeTextStatic.text = "INNOVATIVE";
 				break;
             case TILE_TYPE.OTHER:

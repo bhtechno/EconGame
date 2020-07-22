@@ -9,7 +9,6 @@ public class DiceCheckZoneScript : MonoBehaviour {
 	private Vector3[] diceVelocities;
 	public DiceScript dice1;
 	public DiceScript dice2;
-
 	public int waitTimeB4Movement = 2200;
 	private DiceManager diceManager;
 
@@ -32,7 +31,7 @@ public class DiceCheckZoneScript : MonoBehaviour {
 	private int lastTrigger = 0; // used to ensure the dice fully stopped moving
 	void OnTriggerStay(Collider col)
 	{
-		// to ensuer dice fully stopped moving b4 checking collisions 
+		// to ensuer dice fully stopped moving b4 checking collisions
 		if (lastTrigger++ < waitTimeB4Movement * Time.deltaTime)
 			return;
 		lastTrigger = 0;

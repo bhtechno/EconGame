@@ -45,7 +45,7 @@ public class JobPanelGUI : MonoBehaviour
     /*
      * If true, the yellow background(border) will be opaque
      * if false, it will be set to fully transparent
-    */
+     */
     public void setIsSelected(bool status) {
         float r = yellowBackImage.color.r;
         float g = yellowBackImage.color.g;

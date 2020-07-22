@@ -12,14 +12,9 @@ public class DiceScript : MonoBehaviour {
 	public Vector3 DiceLocation = new Vector3 (0, 2, 0); // The location where the dice throw starts
 	private SphereCollider[] diceSphereColliders; // array for the six sphere surrounding the dice to
 												  // determine what dice value is received
-
 	private void Awake() {
 		diceSphereColliders = GetComponentsInChildren<SphereCollider>();
 		rb = GetComponent<Rigidbody>();
-	}
-
-	// Use this for initialization
-	void Start () {
 	}
 
 	/*
@@ -28,9 +23,6 @@ public class DiceScript : MonoBehaviour {
 	*/
 	void Update () {
 		diceVelocity = rb.velocity;
-		// if (Input.GetKeyDown (KeyCode.Space)) {
-		// 	ThrowDice();
-		// }
 	}
 
 	/* after a throw is done, enable the sphere colliders,
