@@ -9,7 +9,7 @@ public class DiceCheckZoneScript : MonoBehaviour {
 	private Vector3[] diceVelocities;
 	public DiceScript dice1;
 	public DiceScript dice2;
-	public int waitTimeB4Movement = 2200;
+	public float waitTimeB4Movement = 0.5f; // seconds
 	private DiceManager diceManager;
 
 	private void Awake() {
@@ -28,13 +28,9 @@ public class DiceCheckZoneScript : MonoBehaviour {
 	*	I check for both dices if they are the ones who are colliding
 	*
 	*/
-	private int lastTrigger = 0; // used to ensure the dice fully stopped moving
 	void OnTriggerStay(Collider col)
 	{
-		// to ensuer dice fully stopped moving b4 checking collisions
-		if (lastTrigger++ < waitTimeB4Movement * Time.deltaTime)
-			return;
-		lastTrigger = 0;
+
 		DiceValue(0, col);
 		DiceValue(1, col);
 	}
@@ -43,10 +39,17 @@ public class DiceCheckZoneScript : MonoBehaviour {
 	*	collision object to determine what is collided with.
 	*	it will find what dice value based on that, and set it for the dice manager
 	*/
+	public float lastTrigger = 0; // used to ensure the dice fully stopped moving
 	public void DiceValue(byte diceNumber, Collider col) {
 		if (diceVelocities[diceNumber].x == 0f && diceVelocities[diceNumber].y == 0f
 			&& diceVelocities[diceNumber].z == 0f && col.enabled)
 		{
+			// to ensure dice fully stopped moving b4 checking collisions
+			// by waiting for a certain no. of seconds to check the value
+			if ((lastTrigger += Time.deltaTime) < waitTimeB4Movement)
+				return;
+			lastTrigger = 0;
+
 			switch (col.gameObject.name) {
 			case "Side1":
 				DiceManager.setDice(6);
