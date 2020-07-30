@@ -15,7 +15,7 @@ public class ValueBusinessTile : AbstractTile, ITile
     public void setValueBussinessType(VALUE_BUSINESS_TYPE valueBusinessType) {
         this.valueBusinessType = valueBusinessType;
     }
-    public void playerArrived() {
+    public void prompyBuyLocation() {
           print("Value arrived!");
          GUImanager.showImage(TILE_TYPE.VALUE, this.tileImageInfo);
     }

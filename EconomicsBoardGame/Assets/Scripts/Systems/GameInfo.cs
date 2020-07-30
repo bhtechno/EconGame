@@ -18,6 +18,7 @@ public class GameInfo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 30;
         initiateColorsDictionary();
         playersColors = new PLAYER_COLORS[4];
     }

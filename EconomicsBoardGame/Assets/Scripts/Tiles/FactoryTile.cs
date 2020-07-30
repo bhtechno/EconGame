@@ -9,9 +9,9 @@ public class FactoryTile : AbstractTile, ITile
 
     private void Start() {
         this.tileType = TILE_TYPE.FACTORY;
-
+        this.tileItem = ITEM.BUILDING_EQUIPMENT;
     }
-    public void playerArrived() {
+    public void prompyBuyLocation() {
          GUImanager.showImage(TILE_TYPE.FACTORY, this.tileImageInfo);
     }
 

@@ -12,7 +12,7 @@ public class BusinessTile : AbstractTile, ITile
         this.tileType = TILE_TYPE.BUSSINESS;
     }
 
-    public void playerArrived() {
+    public void prompyBuyLocation() {
          print("business arrived!");
          GUImanager.showImage(TILE_TYPE.BUSSINESS, this.tileImageInfo);
     }

@@ -10,7 +10,7 @@ public class FreeLandTile : AbstractTile, ITile
     private void Start() {
         this.tileType = TILE_TYPE.FREE;
     }
-    public void playerArrived() {
+    public void prompyBuyLocation() {
          print("free arrived!");
          GUImanager.showImage(TILE_TYPE.FREE, this.tileImageInfo);
     }

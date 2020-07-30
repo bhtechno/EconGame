@@ -90,17 +90,18 @@ public class GeneralManager : MonoBehaviour
         ITile currentTileInterface = currentTile as ITile;
 
         currentPlayer.playerMovement.enabled = false;
-        if (currentTile.GetTILE_STATUS() != TILE_STATUS.OWNED_LAND) {
+        if (!currentTile.tileHasOwner()) {
             // prompt player to pay
              if (currentTile.GetTILE_TYPE() != TILE_TYPE.EMPTY) {
-                currentTileInterface.playerArrived();
+                currentTileInterface.prompyBuyLocation();
                 GUImanager.EnableButton(BUTTON_TYPE.BUY);
             }
 
         } else {
-
+            if (currentTile.tileHasItem())
+                currentTile.buyItem(currentPlayer);
+            // if tile has an item, player is forced to buy item if he has enough money
             // GUImanager.promptTileBuy(currentPlayer.GetCurrentTile().getTileCard());
-            // prompt player to buy
         }
         GUImanager.EnableButton(BUTTON_TYPE.END_TURN);
     }

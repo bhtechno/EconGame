@@ -9,8 +9,8 @@ public class Player : MonoBehaviour
     public PLAYER_COLORS playerColor;
     private Renderer myRenderer;
     public PlayerMovement playerMovement;
-    float moneyAmount = 15000f;
-    float valueAmount = 1500f;
+    [SerializeField] float moneyAmount = 15000f;
+    [SerializeField] float valueAmount = 1500f;
     float income1 = 0;
     float income2 = 0;
     [SerializeField] List<AbstractTile> OwnedLands;
@@ -18,7 +18,12 @@ public class Player : MonoBehaviour
     private AbstractTile currentTile;
     [SerializeField] JOB_SELECTION initialJob = default;
     [SerializeField] JobPanel.JobInformation jobInformationStruct = default;
+    private Dictionary<ITEM, int> playerInventory;
+    [SerializeField] private WinProject playerProject;
+
     private void Awake() {
+        playerInventory = new Dictionary<ITEM, int>();
+        playerProject = new WinProject();
         OwnedLands = new List<AbstractTile>();
         myRenderer = GetComponent<Renderer>();
     }
@@ -50,10 +55,29 @@ public class Player : MonoBehaviour
     }
 
     /*
-    * used by the tile to assign itself to this player
+    * used by the tile to assign itself to this player, also checks if the player
+    * won the game
     */
     public void addLandToOwned(AbstractTile boughtTile) {
         OwnedLands.Add(boughtTile);
+        fillTileItem(boughtTile);
+        if(playerHasWon())
+            print("Player won:" + (playerIndex + 1));
+    }
+
+    private void fillTileItem(AbstractTile tile) {
+        if(tile.tileHasItem()) {
+            ITEM item = tile.getItemType();
+            int capacity = playerProject.getItemCapacity(item);
+            for (int i = 0; i < capacity; i++)
+            {
+                addItem(item);
+            }
+            if (itemIsOwned(item))
+                playerInventory[item] = -1;
+            else
+                playerInventory.Add(item, -1);
+        }
     }
 
     public AbstractTile GetCurrentTile() {
@@ -80,6 +104,35 @@ public class Player : MonoBehaviour
         this.moneyAmount += income1;
         this.valueAmount += income2;
     }
+
+    /*
+     * Add item to the inventory, and if the item is needed for the project, also add it there
+     * The check for winning also occurs here
+     */
+    public void addItem(ITEM item) {
+        if (itemIsOwned(item)) {
+            // -1 means unlimited. Capacity is already full
+            if (playerInventory[item] == -1)
+                return;
+            else
+                playerInventory[item]++;
+        } else
+            playerInventory.Add(item, 1);
+
+        playerProject.addItem(item);
+        print(playerProject.ToString());
+        if(playerHasWon())
+            print("Player won:" + (playerIndex + 1));
+    }
+
+    public bool playerHasWon() {
+        return playerProject.projectIsCompleted();
+    }
+
+    private bool itemIsOwned(ITEM item) {
+        return playerInventory.ContainsKey(item);
+    }
+
     /*
      * This function will recalculate the income based on the latest
      * updates to any income source the player owns.

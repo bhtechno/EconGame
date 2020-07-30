@@ -36,10 +36,14 @@ public abstract class AbstractTile : MonoBehaviour
     // Offsets from the middle of the tile for each player
     protected Vector3[] PlayerslocationsOffsets;
     [SerializeField]  string tileName = "";
-    [SerializeField] protected float cost = 3000f;
+    [SerializeField] protected float Tilecost = 3000f;
     [SerializeField] protected float rentMoney = 500f;
     [SerializeField] protected TileImageInfo tileImageInfo;
     protected TILE_TYPE tileType;
+    [SerializeField] protected ITEM tileItem;
+    [SerializeField] protected float itemCost = 600;
+
+
     const short playersNo = 4;
     void Awake() {
 
@@ -61,7 +65,7 @@ public abstract class AbstractTile : MonoBehaviour
         }
 
         tileImageInfo = new TileImageInfo();
-        tileImageInfo.setValues(this.tileName, this.cost, this.rentMoney);
+        tileImageInfo.setValues(this.tileName, this.Tilecost, this.rentMoney);
     }
 
     public bool IsOwned() {
@@ -80,12 +84,39 @@ public abstract class AbstractTile : MonoBehaviour
         return tileStatus;
     }
 
+    public bool buyItem(Player buyer) {
+        // if this tile doesn't have an item, just return false
+        if (!tileHasOwner() || !tileHasItem())
+            return false;
+        // only allow if player has enough money
+        if (!buyer.MoneyDepositIsPositive(-itemCost)) {
+            return false;
+        }
+        // prompt GUI MANAGER FOR buying items(s) in General manager
+        buyer.addItem(tileItem);
+        buyer.MoneyChange(-itemCost);
+        owner.MoneyChange(itemCost);
+        return true;
+    }
+
+    public bool tileHasItem() {
+        return tileItem != ITEM.DEFAULT;
+    }
+
+    public ITEM getItemType() {
+        return tileItem;
+    }
+
+    public bool tileHasOwner() {
+        return tileStatus == TILE_STATUS.OWNED_LAND;
+    }
+
     public bool buyLocation(Player buyer) {
-        if (!buyer.MoneyDepositIsPositive(-cost) || owner != null) {
+        if (!buyer.MoneyDepositIsPositive(-Tilecost) || owner != null) {
             return false;
         }
         buyer.addLandToOwned(this);
-        buyer.MoneyChange(-cost);
+        buyer.MoneyChange(-Tilecost);
         this.owner = buyer;
         this.tileStatus = TILE_STATUS.OWNED_LAND;
         return true;

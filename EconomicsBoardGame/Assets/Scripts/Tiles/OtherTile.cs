@@ -11,7 +11,7 @@ public class OtherTile : AbstractTile, ITile
     private void Start() {
         this.tileType = TILE_TYPE.OTHER;
     }
-    public void playerArrived() {
+    public void prompyBuyLocation() {
           print("Other arrived!");
          GUImanager.showImage(TILE_TYPE.OTHER, this.tileImageInfo);
     }

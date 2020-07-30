@@ -12,12 +12,13 @@ public class InnovativeTile : AbstractTile, ITile
     private void Start()
     {
         this.tileType = TILE_TYPE.INNOVATIVE;
+        this.tileItem = ITEM.IOT_DEVICES;
     }
 
     public void setInnovativeTypr(INNOVATIVE_TYPE innovativeType) {
         this.innovativeType = innovativeType;
     }
-    public void playerArrived() {
+    public void prompyBuyLocation() {
          print("Innovative arrived!");
          GUImanager.showImage(TILE_TYPE.INNOVATIVE, this.tileImageInfo);
     }

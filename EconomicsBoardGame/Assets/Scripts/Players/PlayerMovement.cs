@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
  * It will alert subscribers when arrived. Disable the component now.
  */
 
+    [SerializeField] bool cheatMode = false;
+    [SerializeField] short cheatChosenDiceValue = 1;
     GeneralManager generalManager;
     public float jumpHeight = 0.5f;
     public float singleMoveTime = 0.5f;
@@ -60,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
     public void setMovementValues(short diceValue) {
         // this.currentTileIndex = (short)(currentTileIndex % (short)boardTiles.Length); // loop around the board
         // this.targetTileIndex = (short)(targetTileIndex % (short)boardTiles.Length); // loop around the board
+        if (cheatMode)
+            diceValue = cheatChosenDiceValue;
         this.targetTileIndex = (short)((this.currentTileIndex + diceValue) % boardTiles.Length);
     }
 

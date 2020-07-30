@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface ITile
 {
-    void playerArrived();
+    void prompyBuyLocation();
+    // bool buyItem();
 }

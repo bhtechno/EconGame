@@ -8,9 +8,10 @@ public class FarmingTile : AbstractTile, ITile
     // Start is called before the first frame update
     private void Start()
     {
+        this.tileItem = ITEM.VEGETATION;
         this.tileType = TILE_TYPE.FARM;
     }
-    public void playerArrived() {
+    public void prompyBuyLocation() {
          GUImanager.showImage(TILE_TYPE.FARM, this.tileImageInfo);
     }
 
